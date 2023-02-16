@@ -1,0 +1,80 @@
+<div *ngIf="currentStep === 0">
+  <h4>Step 1</h4>
+  <form [formGroup]="userStepFormGroup">
+    <mat-form-field appearance="fill">
+      <mat-label>Login</mat-label>
+      <input matInput formControlName="email">
+    </mat-form-field>
+    <div class="mat-input-error-message" *ngIf="email?.invalid && (email?.dirty || email?.touched || hasError)">
+      <mat-error *ngIf="email?.hasError('required')">Login is a required field</mat-error>
+      <mat-error *ngIf="email?.hasError('email')">Login must be a valid email</mat-error>
+    </div>
+    <mat-form-field appearance="fill">
+      <mat-label>Password</mat-label>
+      <input matInput type="password" formControlName="password">
+    </mat-form-field>
+    <div class="mat-input-error-message" *ngIf="password?.invalid && (password?.dirty || password?.touched || hasError)">
+      <mat-error *ngIf="password?.hasError('required')">Password is a required field</mat-error>
+      <mat-error *ngIf="!password?.hasError('required') && password?.hasError('strongValidator')">Password must contain min 1 digit and min 1 upercase letter</mat-error>
+    </div>
+    <mat-form-field appearance="fill">
+      <mat-label>Confirm password</mat-label>
+      <input matInput type="password" formControlName="confirmPassword">
+    </mat-form-field>
+    <div class="mat-input-error-message" *ngIf="confirmPassword?.invalid && (confirmPassword?.dirty || confirmPassword?.touched || hasError)">
+      <mat-error *ngIf="confirmPassword?.hasError('required')">Password confirmation is required field</mat-error>
+      <mat-error *ngIf="!confirmPassword?.hasError('required') && confirmPassword?.hasError('confirmedValidator')">Confirm password must be the same with password</mat-error>
+    </div>
+    <div class="mat-form-field text-center">
+      <mat-checkbox formControlName="isAgree">Agree to work for food</mat-checkbox>
+    </div>
+    <div *ngIf="isAgree?.invalid && hasError">
+      <mat-error *ngIf="isAgree?.hasError('required')">You must agree with rules</mat-error>
+    </div>
+    <div class="indent text-center">
+      <button mat-raised-button (click)="validateUserForm()">
+        Go to step 2
+      </button>
+    </div>
+  </form>
+</div>
+<div *ngIf="currentStep === 1">
+  <h4>Step 2</h4>
+  <form [formGroup]="areaStepFormGroup">
+    <mat-form-field>
+      <mat-select formControlName="countryId" placeholder="Select country">
+        <mat-option *ngFor="let country of countries" [value]="country.id">
+          {{country.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div class="error-message" *ngIf="countryId?.invalid && (countryId?.dirty || countryId?.touched || hasError)">
+      <mat-error *ngIf="countryId?.hasError('required')">Country a required field</mat-error>
+    </div>
+    <mat-form-field>
+      <mat-select formControlName="provinceId" placeholder="Pleace select country first">
+        <mat-option *ngFor="let province of provinces" [value]="province.id">
+          {{province.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div class="error-message" *ngIf="provinceId?.invalid && (provinceId?.dirty || provinceId?.touched || hasError)">
+      <mat-error *ngIf="provinceId?.hasError('required')">Province a required field</mat-error>
+    </div>
+    <div class="indent text-center">
+      <button mat-raised-button (click)="save()">
+        Save
+      </button>
+    </div>
+  </form>
+</div>
+<div *ngIf="currentStep === 2">
+  <h4>Registration successful</h4>
+  <p>Well done</p>
+</div>
+<div *ngIf="currentStep === 3">
+  <h4>Registration failed</h4>
+  <div *ngFor="let error of errors">
+    <mat-error> {{ error }} </mat-error>
+  </div>
+</div>
