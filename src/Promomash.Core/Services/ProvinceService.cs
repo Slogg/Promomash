@@ -6,10 +6,10 @@ namespace Promomash.Core.Services;
 
 public sealed class ProvinceService : IProvinceService
 {
-    private readonly IRepository<Province> _provinceRepository;
-    private readonly IRepository<Country> _countryRepository;
+    private readonly IReadRepository<Province> _provinceRepository;
+    private readonly IReadRepository<Country> _countryRepository;
 
-    public ProvinceService(IRepository<Province> provinceRepository, IRepository<Country> countryRepository)
+    public ProvinceService(IReadRepository<Province> provinceRepository, IReadRepository<Country> countryRepository)
     {
         _provinceRepository = provinceRepository;
         _countryRepository = countryRepository;
