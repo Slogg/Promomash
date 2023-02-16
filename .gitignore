@@ -229,5 +229,6 @@ _Pvt_Extensions
 
 # FAKE - F# Make
 .fake/
-*.pack
-*.old
+
+# Angular
+**/.angular/cache
